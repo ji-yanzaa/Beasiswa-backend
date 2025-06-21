@@ -1,30 +1,33 @@
 {
-  "name": "projek-capstone",
+  "name": "scholar-match-backend",
   "version": "1.0.0",
-  "main": "app.js",
+  "description": "Backend API ScholarMatch – Platform Informasi dan Pencarian Beasiswa",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yan Zaa",
   "license": "ISC",
-  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ji-yanzaa/Beasiswa-backend.git"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.16.0",
-    "pg-hstore": "^2.3.4",
+    "mysql2": "^3.14.1",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.3",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^2.0.22"
   }
 }

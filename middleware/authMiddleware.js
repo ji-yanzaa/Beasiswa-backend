@@ -1,26 +1,28 @@
-const jwt= require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-exports.verifyToken = (req, res, next) =>{
-    const authHeader = req.headers.authorization;
+// Middleware untuk verifikasi token JWT
+exports.verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith('Bearer')){
-        return res.status(401).json({message: 'Token Tidak Ditemukan'});
-    }
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Token tidak ditemukan' });
+  }
 
-    const token=authHeader.split(' ')[1];
+  const token = authHeader.split(' ')[1];
 
-    try{
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        req.user = decoded; // menyimpan data user ke req
-        next();
-    } catch (err) {
-        return res.status(403).json({message:  'token tidak valid'});
-    }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // simpan data user ke req
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: 'Token tidak valid' });
+  }
 };
 
-exports.isAdmin = (req, res, next) =>{
-    if (req.user.role !=='admin'){
-        return res.status(403).json({message: 'Akses hanya untuk admin'});
-    }
+// Middleware untuk cek role admin
+exports.isAdmin = (req, res, next) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Akses hanya untuk admin' });
+  }
     next();
 };
