@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const scholarshipRoutes = require('./routes/scholarshipRoutes');
-const bookmarksRoutes = require('./routes/bookmarkRoutes')
+const bookmarkRoutes = require('./routes/bookmarkRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +17,7 @@ app.use(express.json());
 // Routing utama
 app.use('/api/auth', authRoutes);
 app.use('/api/scholarships', scholarshipRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
 
 // Route default
 app.get('/', (req, res) => {
