@@ -1,5 +1,6 @@
 const { Bookmark, Scholarship } = require('../models');
 
+// menambahkan bookmarks
 exports.addBookmark = async (req, res) => {
   try {
     const { scholarshipId } = req.body;
@@ -12,6 +13,7 @@ exports.addBookmark = async (req, res) => {
   }
 };
 
+// mendapatkan semua bookmarks
 exports.getBookmarks = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -25,6 +27,7 @@ exports.getBookmarks = async (req, res) => {
   }
 };
 
+// menghapus bookmark berdasarkan id
 exports.removeBookmark = async (req, res) => {
   try {
     const userId = req.user.id;
