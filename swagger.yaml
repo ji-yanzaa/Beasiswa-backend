@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: ScholarMatch API - Mode Testing
+  version: 1.0.0
+  description: Dokumentasi API untuk ScholarMatch – Platform Informasi dan Pencarian Beasiswa
+
+servers:
+  - url: http://localhost:3100
+
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register user baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User berhasil terdaftar
+        '400':
+          description: Email sudah digunakan
+        '500':
+          description: Server error
+
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login berhasil
+        '401':
+          description: Password salah
+        '404':
+          description: User tidak ditemukan
+
+  /api/scholarships:
+    get:
+      tags:
+        - Scholarship
+      summary: Mendapatkan semua data beasiswa
+      responses:
+        '200':
+          description: Sukses
+
+    post:
+      tags:
+        - Scholarship
+      summary: Tambah beasiswa (Admin Only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - provider
+                - deadline
+                - link
+              properties:
+                name:
+                  type: string
+                provider:
+                  type: string
+                deadline:
+                  type: string
+                  format: date
+                link:
+                  type: string
+      responses:
+        '201':
+          description: Beasiswa ditambahkan
+        '403':
+          description: Hanya admin yang dapat menambahkan
+        '500':
+          description: Server error
+
+  /api/scholarships/{id}:
+    get:
+      tags:
+        - Scholarship
+      summary: Mendapatkan beasiswa berdasarkan ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Berhasil mendapatkan data
+        '404':
+          description: Beasiswa tidak ditemukan
+
+    put:
+      tags:
+        - Scholarship
+      summary: Update beasiswa berdasarkan ID (Admin Only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                provider:
+                  type: string
+                deadline:
+                  type: string
+                  format: date
+                link:
+                  type: string
+      responses:
+        '200':
+          description: Berhasil diperbarui
+        '403':
+          description: Hanya admin
+        '404':
+          description: Beasiswa tidak ditemukan
+
+    delete:
+      tags:
+        - Scholarship
+      summary: Hapus beasiswa (Admin Only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Beasiswa dihapus
+        '403':
+          description: Akses ditolak
+        '404':
+          description: Tidak ditemukan
+
+  /api/bookmarks:
+    post:
+      tags:
+        - Bookmark
+      summary: Tambahkan beasiswa ke bookmark user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - scholarshipId
+              properties:
+                scholarshipId:
+                  type: integer
+      responses:
+        '201':
+          description: Bookmark ditambahkan
+        '401':
+          description: Tidak ada token
+        '500':
+          description: Server error
+
+  /api/bookmarks/{id}:
+    delete:
+      tags:
+        - Bookmark
+      summary: Hapus bookmark berdasarkan ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Bookmark dihapus
+        '404':
+          description: Bookmark tidak ditemukan
+        '500':
+          description: Server error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

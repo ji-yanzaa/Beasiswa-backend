@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# dotenv
+.env
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# os generated
+.DS_store
+Thumbs.db
+
+# VScode
+.vscode/
+
+# Sequelize CLI output
+migrations/
+seeders/

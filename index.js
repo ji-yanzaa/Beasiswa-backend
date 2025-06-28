@@ -1,4 +1,4 @@
-require('dotenv').config(); // load .env paling atas
+require('dotenv').config(); // load .env 
 const express = require('express');
 const cors = require('cors');
 
@@ -7,7 +7,7 @@ const scholarshipRoutes = require('./routes/scholarshipRoutes');
 const bookmarkRoutes = require('./routes/bookmarkRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3100;
 require('./swagger')(app);
 
 // Middleware dasar
